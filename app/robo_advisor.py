@@ -5,15 +5,21 @@ import csv
 import json
 import os 
 
+from dotenv import load_dotenv
 import requests
+
+load_dotenv()
 
 def to_usd(my_price):
   # return "${0:,.2f}".format(my_price)
   return f"${my_price:,.2f}"
 
-# INPUTS
+# INPUTS   
+api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
 
-request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo"
+symbol = "MSFT" # TODO accept user input
+
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
 
 response = requests.get(request_url)
 # print(type(response)) #> <class 'requests.models.Response'>
@@ -25,8 +31,7 @@ parsed_response = json.loads(response.text)
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
 
-
-tsd = parsed_response["Time Series (5min)"]
+tsd = parsed_response["Time Series (Daily)"]
 
 dates = list(tsd.keys()) #sort to ensure latest day is first, assuming latest day is first 
 
@@ -57,9 +62,9 @@ csv_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv
 
 csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
-with open(csv_filepath, "w") as csv_file: # "w" means "open the file for writing"
+with open(csv_filepath, "w") as csv_file: 
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
-    writer.writeheader() # uses fieldnames set above
+    writer.writeheader() 
     for date in dates:
         daily_prices = tsd[date]
         writer.writerow({
