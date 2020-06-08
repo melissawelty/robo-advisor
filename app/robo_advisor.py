@@ -17,16 +17,14 @@ def to_usd(my_price):
   return f"${my_price:,.2f}"
 
 # INPUTS   
+
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
 
-symbol = "MSFT" # TODO accept user input
+symbol = input("Please enter a stock symbol and press enter:")
 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
 
 response = requests.get(request_url)
-# print(type(response)) #> <class 'requests.models.Response'>
-# print(response.status_code) #> 200
-# print(response.text) #> dictionary object 
 
 parsed_response = json.loads(response.text)
 
@@ -43,8 +41,6 @@ latest_close = tsd[latest_day]["4. close"]
 
 
 #max of all high prices
-
-
 high_prices = []
 low_prices = []
 
@@ -79,7 +75,7 @@ with open(csv_filepath, "w") as csv_file:
         })
 
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
+print(f"SELECTED SYMBOL: {symbol}")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 now = datetime.now()
