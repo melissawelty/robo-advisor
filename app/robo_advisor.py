@@ -8,6 +8,8 @@ import os
 from dotenv import load_dotenv
 import requests
 
+from datetime import datetime
+
 load_dotenv()
 
 def to_usd(my_price):
@@ -80,14 +82,16 @@ print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm") ##datetime module 
+now = datetime.now()
+date_time = now.strftime("%D, %r")
+print("REQUEST AT:" + date_time)  
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!") # conditions for recommendation 
+print("RECOMMENDATION: BUY!") # TODO conditions for recommendation 
 print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_filepath}...")
