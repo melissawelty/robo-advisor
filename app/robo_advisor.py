@@ -26,12 +26,16 @@ request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&sym
 
 response = requests.get(request_url)
 
-parsed_response = json.loads(response.text)
 
-if 'error' in parsed_response:
+
+if 'Error' in response.text:
     print("Invalid Symbol. Please enter valid stock symbol.")
-else:
-    last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+    exit()
+
+parsed_response = json.loads(response.text)
+print(response.text)
+
+last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
 
 tsd = parsed_response["Time Series (Daily)"]
