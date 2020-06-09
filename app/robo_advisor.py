@@ -28,7 +28,10 @@ response = requests.get(request_url)
 
 parsed_response = json.loads(response.text)
 
-last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+if 'error' in parsed_response:
+    print("Invalid Symbol. Please enter valid stock symbol.")
+else:
+    last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
 
 tsd = parsed_response["Time Series (Daily)"]
@@ -53,6 +56,7 @@ for date in dates:
 
 recent_high = max(high_prices) 
 recent_low = min(low_prices)
+
 
 # OUTPUTS
  
@@ -87,8 +91,12 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!") # TODO conditions for recommendation 
-print("RECOMMENDATION REASON: TODO")
+if float(latest_close) > (float(recent_high) * .75):
+    print("RECOMMENDATION: DON'T BUY! The stock price is too high and not a good investment.")
+elif float(latest_close) < (float(recent_low) * 1.15):
+    print("RECOMMENDATION: BUY AND HOLD! The price is low and could generate high returns when it increases!")
+else:
+    print("RECOMMENDATION: DON'T BUY! Keep watching, this could be a potential buy soon..")
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_filepath}...")
 print("-------------------------")
