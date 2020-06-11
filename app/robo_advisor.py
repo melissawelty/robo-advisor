@@ -10,6 +10,11 @@ import requests
 
 from datetime import datetime
 
+import matplotlib.pyplot as plt
+from matplotlib.dates import (YEARLY, DateFormatter, rrulewrapper, RRuleLocator, drange)
+import numpy as np
+
+
 load_dotenv()
 
 def to_usd(my_price):
@@ -33,7 +38,7 @@ if 'Error' in response.text:
     exit()
 
 parsed_response = json.loads(response.text)
-print(response.text)
+
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
@@ -106,6 +111,16 @@ print(f"WRITING DATA TO CSV: {csv_filepath}...")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
+N = 150
+x = dates
+y = float(latest_close)
+
+
+plt.scatter(x, y)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
 
 
 
