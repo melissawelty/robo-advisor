@@ -71,7 +71,7 @@ csv_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv
 
 csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
-with open(csv_filepath, "w") as csv_file: 
+with open(csv_filepath, "w", newline="") as csv_file: 
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader() 
     for date in dates:
@@ -115,10 +115,11 @@ x = []
 y = []
 
 with open(csv_filepath, 'r') as csvfile:
-    plots=csv.reader(csvfile, delimiter=",")
-    for row in plots:
-        x.append(row(str('timestamp'))) 
-        y.append(row[float('close')])
+    rows=csv.reader(csvfile, delimiter=",")
+    next(rows)
+    for row in rows:
+        x.append(row[0]) 
+        y.append(float(row[4]))
 
 plt.plot(x,y,marker='o')
 
