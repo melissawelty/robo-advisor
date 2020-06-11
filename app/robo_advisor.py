@@ -11,8 +11,6 @@ import requests
 from datetime import datetime
 
 import matplotlib.pyplot as plt
-from matplotlib.dates import (YEARLY, DateFormatter, rrulewrapper, RRuleLocator, drange)
-import numpy as np
 
 
 load_dotenv()
@@ -112,14 +110,23 @@ print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
 
-N = 150
-x = dates
-y = float(latest_close)
 
+x = []
+y = []
 
-plt.scatter(x, y)
-plt.xlabel('x')
-plt.ylabel('y')
+with open(csv_filepath, 'r') as csvfile:
+    plots=csv.reader(csvfile, delimiter=",")
+    for row in plots:
+        x.append(row(str('timestamp'))) 
+        y.append(row[float('close')])
+
+plt.plot(x,y,marker='o')
+
+plt.title('Data from Prices')
+
+plt.xlabel('Date')
+plt.ylabel('Price')
+
 plt.show()
 
 
