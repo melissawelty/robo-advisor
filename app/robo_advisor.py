@@ -10,6 +10,7 @@ import requests
 
 from datetime import datetime
 
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 
 
@@ -121,12 +122,22 @@ with open(csv_filepath, 'r') as csvfile:
         x.append(row[0]) 
         y.append(float(row[4]))
 
+plt.figure(figsize = (20,6))
+
 plt.plot(x,y,marker='o')
+
 
 plt.title('Data from Prices')
 
 plt.xlabel('Date')
-plt.ylabel('Price')
+# locator = mdates.autodatelocator(minticks = 15, maxticks = 5)
+# formatter = mdates.concisedateformatter(locator)
+# axes.xaxis.set_major_locator(locator) 
+# axes.xaxis.set_major_formatter(formatter) 
+plt.xticks(rotation=45)
+plt.ylabel('Price in USD')
+
+
 
 plt.show()
 

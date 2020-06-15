@@ -1,6 +1,6 @@
 # Robo Advisor Project
 
-This app issues requests to the [AlphaVantage Stock Market API](https://www.alphavantage.co/) in order to provide stock and/or cryptocurrency recommendations. 
+This app issues requests to the [AlphaVantage Stock Market API](https://www.alphavantage.co/) in order to provide stock recommendations based on historical price trends. 
 
 ## Prerequisites 
 * Anaconda 3.7
@@ -46,11 +46,10 @@ Run the recommendation script:
 ```
 python app/robo_advisor.py
 ```
-## Testing
-Install pytest (first time only):
-```
-pytest
-```
+## Additional Information
+
+A separate window will populate with historical prices illustrated on a graphic. After viewing, close the graph to see up to date stock prices and a recommendation. 
+
 
 
 
