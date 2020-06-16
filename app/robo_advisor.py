@@ -12,6 +12,7 @@ from datetime import datetime
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+from matplotlib.dates import DateFormatter
 
 
 load_dotenv()
@@ -122,7 +123,7 @@ with open(csv_filepath, 'r') as csvfile:
         x.append(row[0]) 
         y.append(float(row[4]))
 
-plt.figure(figsize = (20,6))
+plt.figure(figsize = (15,6))
 
 plt.plot(x,y,marker='o')
 
@@ -130,12 +131,13 @@ plt.plot(x,y,marker='o')
 plt.title('Data from Prices')
 
 plt.xlabel('Date')
-# locator = mdates.autodatelocator(minticks = 15, maxticks = 5)
-# formatter = mdates.concisedateformatter(locator)
-# axes.xaxis.set_major_locator(locator) 
-# axes.xaxis.set_major_formatter(formatter) 
 plt.xticks(rotation=45)
 plt.ylabel('Price in USD')
+
+ax = plt.gca()
+# date_form = DateFormatter("%m-%d")
+# ax.xaxis.set_major_formatter(date_form)
+ax.invert_xaxis()
 
 
 
