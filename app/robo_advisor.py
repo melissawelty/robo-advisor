@@ -33,7 +33,7 @@ response = requests.get(request_url)
 
 
 
-if 'error' in response.text:
+if 'Error' in response.text:
     print("Invalid Symbol. Please enter valid stock symbol.")
     exit()
 
